@@ -1,6 +1,7 @@
 import Layout from "../components/layout/Layout";
 import {useSelector} from "react-redux";
-import PostCard from "../components/card/Card";
+import PostFactory from "../components/postFactory/PostFactory";
+import {useMemo} from "react";
 
 function Home() {
 
@@ -8,18 +9,23 @@ function Home() {
     const users = useSelector((state) => state.app.users);
     const comments = useSelector((state) => state.app.comments);
 
-    console.log(posts, users, comments);
-
+    const PostFactoryMemoized = useMemo(() => {
+        if (posts.length > 0 && comments.length > 0 && users.length > 0) {
+            console.log('PostFactoryMemoized');
+            return <PostFactory comments={comments} posts={posts} users={users}/>
+        }
+        console.log('Failed to load Memoized');
+        return (<div>Loading...</div>);
+    }, [posts, comments, users])
 
     return (
         <Layout>
             <h1>Hello, World</h1>
-            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-
+            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured
+                content or information.</p>
             <div className={'d-flex flex-column '}>
-                {posts.length > 0 && users.length > 0 && comments.length > 0 && <PostCard body={posts[1].body} title={posts[1].title} user={users[1]} comments={[comments[1], comments[2], comments[3]]} /> }
+                {PostFactoryMemoized}
             </div>
-
         </Layout>
 
     );

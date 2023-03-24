@@ -34,10 +34,32 @@ const CommentCard = (comment) => {
     )
 }
 
-const PostCard = ({title, body, comments, user}) => {
+const PostCard = ({title, body, comments, userName, userEmail}) => {
     const [showComments, setShowComments] = useState(false);
     const [likes, setLikes] = useState(getRandomArbitrary(0, 20).toFixed(0));
     const [dislikes, setDislikes] = useState(getRandomArbitrary(0, 20).toFixed(0));
+    const [isLiked, setIsLiked] = useState(false);
+    const [isDisliked, setIsDisliked] = useState(false);
+
+    const likePost = () => {
+        if (!isLiked && !isDisliked) {
+            setLikes((e) => parseInt(e) + 1);
+            setIsLiked(true);
+        } else if (isLiked && !isDisliked) {
+            setLikes((e) => parseInt(e) - 1);
+            setIsLiked(false);
+        }
+    }
+
+    const dislikePost = () => {
+        if (!isLiked && !isDisliked) {
+            setDislikes((e) => parseInt(e) + 1);
+            setIsDisliked(true);
+        } else if (!isLiked && isDisliked) {
+            setDislikes((e) => parseInt(e) - 1);
+            setIsDisliked(false);
+        }
+    }
 
     const commentList = useMemo(() => {
         if (showComments) {
@@ -50,7 +72,7 @@ const PostCard = ({title, body, comments, user}) => {
     }, [showComments])
     return (
         <Card style={{
-            maxWidth: '1080px'
+            maxWidth: '1200px'
         }}>
             <Card.Body classname='d-flex text-center'>
                 <Card.Title className={'text-uppercase fs-4 fw-semibold text-center'}> {title} </Card.Title>
@@ -67,10 +89,10 @@ const PostCard = ({title, body, comments, user}) => {
                     <Col xs={12} lg={3} className={'d-flex flex-column justify-content-center align-items-center'}>
                         <figure className={'p-0 m-0'}>
                             <blockquote className="blockquote">
-                                <p>{user.name}</p>
+                                <p>{userName}</p>
                             </blockquote>
                             <figcaption className="blockquote-footer">
-                                @{user.username}
+                                @{userEmail}
                             </figcaption>
                         </figure>
                     </Col>
@@ -81,8 +103,8 @@ const PostCard = ({title, body, comments, user}) => {
                     </Col>
                     <Col xs={12} lg={3} className={'d-flex flex-column justify-content-center align-items-center'}>
                         <div>
-                            <Button variant={"outline-success"} className={'m-2'}> Like </Button>
-                            <Button variant={"outline-danger"} className={'m-2'}> Dislike </Button>
+                            <Button variant={"outline-success"} className={'m-2'} onClick={()=>likePost()} disabled={isDisliked} active={isLiked}> Like </Button>
+                            <Button variant={"outline-danger"} className={'m-2'} onClick={()=>dislikePost()} disabled={isLiked} active={isDisliked}> Dislike </Button>
                         </div>
                     </Col>
                 </Row>
