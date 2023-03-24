@@ -1,0 +1,35 @@
+{
+  "name": "ders-interview",
+  "version": "1",
+  "description": "Coding interview task",
+  "main": "src/index.js",
+  "repository": "git@github.com:Nr3Jokim/ders-interview.git",
+  "author": "Jakub Konecny <konecj22@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start"
+  },
+  "dependencies": {
+    "add": "^2.0.6",
+    "bootstrap": "^5.2.3",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.2",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "yarn": "^1.22.19"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
