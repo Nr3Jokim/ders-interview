@@ -16,7 +16,7 @@ const Layout = (props) => {
                 </div>
             </Navbar>
 
-            <Container>
+            <Container className={'d-flex align-items-center justify-content-center flex-column my-4'}>
                 {props.children}
             </Container>
 
