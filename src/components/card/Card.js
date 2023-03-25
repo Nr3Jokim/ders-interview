@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import {useMemo, useState} from "react";
 import {Button, Col, Row} from "react-bootstrap";
+import styled, {keyframes} from "styled-components";
 
 const getRandomArbitrary = (min, max) => {
     return Math.random() * (max - min) + min;
@@ -34,12 +35,38 @@ const CommentCard = (comment) => {
     )
 }
 
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+
+
+
 const PostCard = ({title, body, comments, userName, userEmail}) => {
     const [showComments, setShowComments] = useState(false);
     const [likes, setLikes] = useState(getRandomArbitrary(0, 20).toFixed(0));
     const [dislikes, setDislikes] = useState(getRandomArbitrary(0, 20).toFixed(0));
     const [isLiked, setIsLiked] = useState(false);
     const [isDisliked, setIsDisliked] = useState(false);
+
+    const AnimationCommentsWrapper = styled.div`
+      opacity: 0;
+      animation: ${fadeIn} 0.5s ease-in-out forwards;
+
+      ${({showComments}) =>
+        showComments &&
+        `
+      opacity: 1;
+      animation: none;
+    `}
+`;
 
     const likePost = () => {
         if (!isLiked && !isDisliked) {
@@ -74,7 +101,7 @@ const PostCard = ({title, body, comments, userName, userEmail}) => {
         <Card style={{
             maxWidth: '1200px'
         }} className={'m-2'}>
-            <Card.Body >
+            <Card.Body>
                 <Card.Title className={'text-uppercase fs-4 fw-semibold text-center m-4'}> {title} </Card.Title>
                 <Card.Text className={'text-center fs-5 m-4'}> {body} </Card.Text>
                 <div className={'d-flex flex-row justify-content-center align-items-center'}>
@@ -96,18 +123,24 @@ const PostCard = ({title, body, comments, userName, userEmail}) => {
                             </figcaption>
                         </figure>
                     </Col>
-                    <Col xs={12} lg={6} className={'d-none d-md-flex flex-column justify-content-center align-items-center'}>
+                    <Col xs={12} lg={6}
+                         className={'d-none d-md-flex flex-column justify-content-center align-items-center'}>
                         <Button variant={"link"} onClick={() => setShowComments((e) => !e)}>
                             See ({comments.length}) Comments <DownArrow/>
                         </Button>
                     </Col>
                     <Col xs={12} lg={3} className={'sm:d-flex flex-column justify-content-center align-items-center'}>
                         <div>
-                            <Button variant={"outline-success"} className={'m-2 flex-fill'} style={{minWidth: '46px', minHeight: '46px'}} onClick={()=>likePost()} disabled={isDisliked} active={isLiked}> Like </Button>
-                            <Button variant={"outline-danger"} className={'m-2 flex-fill'} style={{minWidth: '46px', minHeight: '46px'}} onClick={()=>dislikePost()} disabled={isLiked} active={isDisliked}> Dislike </Button>
+                            <Button variant={"outline-success"} className={'m-2 flex-fill'}
+                                    style={{minWidth: '46px', minHeight: '46px'}} onClick={() => likePost()}
+                                    disabled={isDisliked} active={isLiked}> Like </Button>
+                            <Button variant={"outline-danger"} className={'m-2 flex-fill'}
+                                    style={{minWidth: '46px', minHeight: '46px'}} onClick={() => dislikePost()}
+                                    disabled={isLiked} active={isDisliked}> Dislike </Button>
                         </div>
                     </Col>
-                    <Col xs={12} lg={6} className={'d-md-none d-sm-flex flex-column justify-content-center align-items-center'}>
+                    <Col xs={12} lg={6}
+                         className={'d-md-none d-sm-flex flex-column justify-content-center align-items-center'}>
                         <Button variant={"link"} onClick={() => setShowComments((e) => !e)}>
                             See ({comments.length}) Comments <DownArrow/>
                         </Button>
@@ -115,7 +148,9 @@ const PostCard = ({title, body, comments, userName, userEmail}) => {
                 </Row>
 
                 {showComments && <>
-                    {commentList}
+                    <AnimationCommentsWrapper>
+                        {commentList}
+                    </AnimationCommentsWrapper>
                 </>}
 
             </Card.Body>
