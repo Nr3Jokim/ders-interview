@@ -22,7 +22,7 @@ const Layout = (props) => {
 
             <footer className="bg-light py-3">
                 <Container>
-                    <p>Footer content goes here.</p>
+                    <p>Generic footer noone reads - This project has been made by Jakub Konečný</p>
                 </Container>
             </footer>
         </div>
