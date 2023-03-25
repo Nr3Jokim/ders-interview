@@ -11,9 +11,9 @@ const PostFactory = ({posts, comments, users}) => {
         const userFind = users.find((user) => user.id.toString() === post.userId.toString());
         const commentsFind = comments.filter((comment) => comment.postId === post.id);
         return (
-            <PostCard key={post.id} body={post.body} title={post.title} userEmail={userFind.email}
+            <PostCard key={post.id} postId={post.id} userEmail={userFind.email}
                       userName={userFind.name}
-                      comments={commentsFind}/>
+                      comments={commentsFind} />
         );
     })
 }
