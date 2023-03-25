@@ -73,10 +73,10 @@ const PostCard = ({title, body, comments, userName, userEmail}) => {
     return (
         <Card style={{
             maxWidth: '1200px'
-        }}>
-            <Card.Body classname='d-flex text-center'>
-                <Card.Title className={'text-uppercase fs-4 fw-semibold text-center'}> {title} </Card.Title>
-                <Card.Text className={'text-center fs-5 mx-4'}> {body} </Card.Text>
+        }} className={'m-2'}>
+            <Card.Body >
+                <Card.Title className={'text-uppercase fs-4 fw-semibold text-center m-4'}> {title} </Card.Title>
+                <Card.Text className={'text-center fs-5 m-4'}> {body} </Card.Text>
                 <div className={'d-flex flex-row justify-content-center align-items-center'}>
                     <div className={'border border-success bg-success-subtle p-2 m-2 rounded-pill'}>
                         +{likes}
@@ -96,16 +96,21 @@ const PostCard = ({title, body, comments, userName, userEmail}) => {
                             </figcaption>
                         </figure>
                     </Col>
-                    <Col xs={12} lg={6} className={'d-flex flex-column justify-content-center align-items-center'}>
+                    <Col xs={12} lg={6} className={'d-none d-md-flex flex-column justify-content-center align-items-center'}>
                         <Button variant={"link"} onClick={() => setShowComments((e) => !e)}>
                             See ({comments.length}) Comments <DownArrow/>
                         </Button>
                     </Col>
-                    <Col xs={12} lg={3} className={'d-flex flex-column justify-content-center align-items-center'}>
+                    <Col xs={12} lg={3} className={'sm:d-flex flex-column justify-content-center align-items-center'}>
                         <div>
-                            <Button variant={"outline-success"} className={'m-2'} onClick={()=>likePost()} disabled={isDisliked} active={isLiked}> Like </Button>
-                            <Button variant={"outline-danger"} className={'m-2'} onClick={()=>dislikePost()} disabled={isLiked} active={isDisliked}> Dislike </Button>
+                            <Button variant={"outline-success"} className={'m-2 flex-fill'} style={{minWidth: '46px', minHeight: '46px'}} onClick={()=>likePost()} disabled={isDisliked} active={isLiked}> Like </Button>
+                            <Button variant={"outline-danger"} className={'m-2 flex-fill'} style={{minWidth: '46px', minHeight: '46px'}} onClick={()=>dislikePost()} disabled={isLiked} active={isDisliked}> Dislike </Button>
                         </div>
+                    </Col>
+                    <Col xs={12} lg={6} className={'d-md-none d-sm-flex flex-column justify-content-center align-items-center'}>
+                        <Button variant={"link"} onClick={() => setShowComments((e) => !e)}>
+                            See ({comments.length}) Comments <DownArrow/>
+                        </Button>
                     </Col>
                 </Row>
 
