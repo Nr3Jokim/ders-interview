@@ -2,7 +2,7 @@ import Layout from "../components/layout/Layout";
 import {useSelector} from "react-redux";
 import PostFactory from "../components/postFactory/PostFactory";
 import {useMemo, useState} from "react";
-import {Button, Form} from "react-bootstrap";
+import {Button, Form, Spinner} from "react-bootstrap";
 
 function Home() {
 
@@ -26,7 +26,12 @@ function Home() {
             return <PostFactory comments={comments} posts={posts} users={users}/>
 
         }
-        return (<div>Loading...</div>);
+        return (
+            <>
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            </>);
     }, [posts, comments, users, postsFiltered])
 
     return (
@@ -35,7 +40,7 @@ function Home() {
             <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured
                 content or information.</p>
 
-            <Form onSubmit={(e)=> {
+            <Form onSubmit={(e) => {
                 e.preventDefault();
                 const value = e.target.searchForTitle.value;
                 console.log(value)
@@ -49,7 +54,7 @@ function Home() {
 
                 />
                 <Form.Text id="searchForTitle" muted>
-                   Type the title of the post you want to search for :)
+                    Type the title of the post you want to search for :)
                 </Form.Text>
                 <Button variant="outline-success" className={'m-2'} type="submit">Submit</Button>
             </Form>
@@ -58,7 +63,6 @@ function Home() {
                 {PostFactoryMemoized}
             </div>
         </Layout>
-
     );
 }
 
