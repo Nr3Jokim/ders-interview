@@ -1,5 +1,48 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchComments, fetchPosts, fetchUsers } from '../utils/thunkFetch';
+import {createSlice} from '@reduxjs/toolkit';
+import {fetchComments, fetchPosts, fetchUsers} from '../utils/thunkFetch';
+import {getRandomArbitrary} from "../utils/utils";
+import * as Types from "./Types";
+
+export const controlLikesAndDislikes = (state, action) => {
+
+    switch (action) {
+        case Types.LIKE_INCREASE:
+            return {
+                type: Types.LIKE_INCREASE,
+                state: {
+                    ...state,
+                    likes: state.likes + 1,
+                }
+            }
+        case Types.LIKE_DECREASE:
+            return {
+                type: Types.LIKE_DECREASE,
+                state: {
+                    ...state,
+                    likes: state.likes - 1,
+                }
+            }
+        case Types.DISLIKE_INCREASE:
+            return {
+                type: Types.DISLIKE_INCREASE,
+                state: {
+                    ...state,
+                    dislikes: state.dislikes + 1,
+                }
+            }
+        case Types.DISLIKE_DECREASE:
+            return {
+                type: Types.DISLIKE_DECREASE,
+                state: {
+                    ...state,
+                    dislikes: state.dislikes - 1,
+                }
+            }
+        default:
+            return state;
+    }
+};
+
 
 const appSlice = createSlice({
     name: 'app',
@@ -10,7 +53,9 @@ const appSlice = createSlice({
         status: 'idle',
         error: null,
     },
-    reducers: {},
+    reducers: {
+        controlLikesAndDislikes
+    },
     extraReducers: (builder) => {
         builder
             // Handle fetchPosts action
@@ -19,7 +64,11 @@ const appSlice = createSlice({
             })
             .addCase(fetchPosts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.posts = action.payload;
+                state.posts = action.payload.map((post) => ({
+                    ...post,
+                    likes: getRandomArbitrary(1, 20),
+                    dislikes: getRandomArbitrary(1, 20),
+                }));
             })
             .addCase(fetchPosts.rejected, (state, action) => {
                 state.status = 'failed';

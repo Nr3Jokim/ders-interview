@@ -1,0 +1,17 @@
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.AnimationCommentsWrapper {
+    opacity: 0;
+    animation: fade-in 1s ease-in-out forwards;
+}
+
+.AnimationCommentsWrapper.show {
+    opacity: 1;
+}
