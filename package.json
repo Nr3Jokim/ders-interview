@@ -6,7 +6,7 @@
   "repository": "git@github.com:Nr3Jokim/ders-interview.git",
   "author": "Jakub Konecny <konecj22@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "react-scripts start"
   },
